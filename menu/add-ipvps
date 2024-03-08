@@ -1,0 +1,64 @@
+#!/bin/bash
+export HOME=/root
+export TERM=xterm
+NC='\e[0m'
+dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+ipsaya=$(curl -sS ipv4.icanhazip.com)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+data_ip="https://raw.githubusercontent.com/Sabda25/ip/main/izin"
+
+clear
+Repo1="https://raw.githubusercontent.com/Sabda25/ip/main/"
+export MYIP=$( curl -sS ipv4.icanhazip.com/ )
+SELLER=$(curl -sS ${Repo1}izin | grep $MYIP | awk '{print $2}')
+Exp100=$(curl -sS ${Repo1}izin | grep $MYIP | awk '{print $3}')
+data_ip="https://raw.githubusercontent.com/Sabda25/ip/main/izin"
+d2=$(date -d "$date_list" +"+%s")
+d1=$(date -d "$Exp" +"+%s")
+dayleft=$(( ($d1 - $d2) / 86400 ))
+####
+TOKEN="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"
+REPO="https://github.com/Sabda25/ip/main/"
+EMAIL="akunpribadi250925@gmail.com"
+USER="Sabda25"
+today=$(date -d "0 days" +"%Y-%m-%d")
+#####
+git clone ${REPO} /root/ipvps/
+echo -e ""
+echo -e ""
+read -p "Input IP Address : " ip
+CLIENT_EXISTS=$(grep -w $ip /root/ipvps/ip | wc -l)
+if [[ ${CLIENT_EXISTS} == '1' ]]; then
+echo "IP Already Exist !"
+rm -rf /root/ipvps
+exit 0
+fi
+echo -e ""
+read -p " Input username : " name
+echo -e ""
+clear
+read -p " Masukan waktu expired : " exp
+exp2=`date -d "${exp} days" +"%Y-%m-%d"`
+echo "### ${name} ${exp2} ${ip}" >> /root/ipvps/ip
+
+cd /root/ipvps
+git config --global user.email "${EMAIL}"
+git config --global user.name "${USER}"
+rm -rf .git &> /dev/null
+git init &> /dev/null
+git add . &> /dev/null
+git commit -m coli &> /dev/null
+git branch -M main &> /dev/null
+git remote add origin https://github.com/Sabda25/ip/main/ip
+git push -f https://${TOKEN}@github.com/Sabda25/ip/main/ip &> /dev/null
+rm -rf /root/ipvps
+
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo -e "🍀VPS SUCCESSFULLY REGISTER🍀"
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo -e "🌹NAME AUTHOR : $name"
+echo -e "🏵️SCRIPT TIME : $exp2"
+echo -e "🌺IP SERVER   : $ip"
+echo -e "━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
